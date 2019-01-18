@@ -1,6 +1,8 @@
 import 'package:airadar/blocks/place_block.dart';
 import 'package:airadar/model/place.dart';
 import 'package:airadar/model/place_suggestions_state.dart';
+import 'package:airadar/widgets/fetch_error_widget.dart';
+import 'package:airadar/widgets/loading_widget.dart';
 import 'package:airadar/widgets/place_item.dart';
 import 'package:flutter/material.dart';
 
@@ -53,42 +55,15 @@ class PlacePickerScreen extends StatelessWidget {
 
   Widget _buildStateWidget(BuildContext context, PlaceSuggestionsState state) {
     if (state.loading) {
-      return _loadingListWidget();
+      return LoadingWidget();
     } else if (state.error) {
-      return _dataErrorWidget();
+      return FetchErrorWidget();
     } else if (state.placeSuggestions == null ||
         state.placeSuggestions.places.isEmpty) {
       return _emptyListWidget();
     } else {
       return _placeSuggestionsList(state.placeSuggestions.places);
     }
-  }
-
-  Widget _loadingListWidget() {
-    return Center(
-      child: CircularProgressIndicator(),
-    );
-  }
-
-  Widget _dataErrorWidget() {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Icon(
-            Icons.error,
-            color: Colors.red,
-            size: 100.0,
-          ),
-          Text(
-            'Error',
-            style: TextStyle(
-              fontSize: 24.0,
-            ),
-          ),
-        ],
-      ),
-    );
   }
 
   Widget _emptyListWidget() {
