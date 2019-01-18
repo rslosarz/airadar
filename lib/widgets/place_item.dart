@@ -1,4 +1,5 @@
 import 'package:airadar/model/place.dart';
+import 'package:airadar/screens/weather_screen.dart';
 import 'package:airadar/utils/resource_manager.dart';
 import 'package:flutter/material.dart';
 
@@ -10,13 +11,17 @@ class PlaceItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      onTap: () => showItemDetail(context, place),
       child: Container(
         padding: EdgeInsets.all(16.0),
         child: Row(
           children: <Widget>[
-            Image.asset(
-              ResourceManager.getPlaceImageAsset(place),
-              width: 64.0,
+            Hero(
+              tag: place.properties.hashCode,
+              child: Image.asset(
+                ResourceManager.getPlaceImageAsset(place),
+                width: 64.0,
+              ),
             ),
             Expanded(
               child: Padding(
@@ -57,5 +62,10 @@ class PlaceItem extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  showItemDetail(BuildContext context, Place place) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => WeatherScreen(place)));
   }
 }
