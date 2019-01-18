@@ -1,5 +1,6 @@
 import 'package:airadar/blocks/place_block.dart';
 import 'package:airadar/model/place.dart';
+import 'package:airadar/model/place_suggestions_state.dart';
 import 'package:airadar/widgets/place_item.dart';
 import 'package:flutter/material.dart';
 
@@ -10,46 +11,111 @@ class PlacePickerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<PlaceSuggestions>(
-      stream: placeBlock.placeSuggestions,
-      builder: (context, snapshot) => getPlacePickerBody(context, snapshot),
-    );
-  }
-
-  Widget getPlacePickerBody(
-      BuildContext context, AsyncSnapshot<PlaceSuggestions> snapshot) {
-    final items =
-        snapshot.data != null ? snapshot.data.places : List<PlaceSuggestions>();
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Place Picker'),
       ),
-      body: Flex(
-        direction: Axis.vertical,
+      body: Column(
         children: <Widget>[
-          Container(
-            padding: EdgeInsets.all(16.0),
-            child: TextField(
-              style: TextStyle(
-                fontSize: 24.0
-              ),
-              decoration: InputDecoration(
-                border: UnderlineInputBorder(),
-                hintText: 'Place for place...',
-              ),
-              onChanged: placeBlock.query.add,
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: items.length,
-              itemBuilder: (context, index) =>
-                  _buildPlaceItem(context, items[index]),
-            ),
-          )
+          _buildSearchInput(),
+          _buildPlaceSuggestionList(),
         ],
       ),
+    );
+  }
+
+  Widget _buildSearchInput() {
+    return Container(
+      padding: EdgeInsets.all(16.0),
+      child: TextField(
+        style: TextStyle(fontSize: 24.0),
+        decoration: InputDecoration(
+          border: UnderlineInputBorder(),
+          hintText: 'Place for place...',
+        ),
+        onChanged: placeBlock.query.add,
+      ),
+    );
+  }
+
+  Widget _buildPlaceSuggestionList() {
+    return StreamBuilder<PlaceSuggestionsState>(
+      initialData: PlaceSuggestionsState(),
+      stream: placeBlock.placeSuggestions,
+      builder: (context, snapshot) {
+        final state = snapshot.data;
+        return Expanded(
+          child: _buildStateWidget(context, state),
+        );
+      },
+    );
+  }
+
+  Widget _buildStateWidget(BuildContext context, PlaceSuggestionsState state) {
+    if (state.loading) {
+      return _loadingListWidget();
+    } else if (state.error) {
+      return _dataErrorWidget();
+    } else if (state.placeSuggestions == null ||
+        state.placeSuggestions.places.isEmpty) {
+      return _emptyListWidget();
+    } else {
+      return _placeSuggestionsList(state.placeSuggestions.places);
+    }
+  }
+
+  Widget _loadingListWidget() {
+    return Center(
+      child: CircularProgressIndicator(),
+    );
+  }
+
+  Widget _dataErrorWidget() {
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Icon(
+            Icons.error,
+            color: Colors.red,
+            size: 100.0,
+          ),
+          Text(
+            'Error',
+            style: TextStyle(
+              fontSize: 24.0,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _emptyListWidget() {
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Icon(
+            Icons.inbox,
+            color: Colors.greenAccent,
+            size: 100.0,
+          ),
+          Text(
+            'List is empty',
+            style: TextStyle(
+              fontSize: 24.0,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _placeSuggestionsList(List<Place> items) {
+    return ListView.builder(
+      itemCount: items.length,
+      itemBuilder: (context, index) => _buildPlaceItem(context, items[index]),
     );
   }
 
