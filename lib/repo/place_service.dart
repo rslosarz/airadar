@@ -11,8 +11,8 @@ class PlaceService implements PlaceRepository {
 
   @override
   Future<PlaceSuggestions> getPlaceSuggestions(String query) async {
-    final url = Uri.http(
-        placeUrl, apiPath, {"q": query, "lang": "en", "limit": "7"});
+    final url =
+        Uri.http(placeUrl, apiPath, {"q": query, "lang": "en", "limit": "7"});
     final response = await http.get(url);
 
     return PlaceSuggestions.fromJson(json.decode(response.body));

@@ -8,14 +8,14 @@ class ResourceManager {
         return 'assets/icons/city.png';
       case 'village':
       case 'suburb':
-      return 'assets/icons/village.png';
+        return 'assets/icons/village.png';
       case 'region':
       case 'county':
-      return 'assets/icons/region.png';
+        return 'assets/icons/region.png';
       case 'living_street':
       case 'service':
       case 'residential':
-      return 'assets/icons/road.png';
+        return 'assets/icons/road.png';
       case 'river':
         return 'assets/icons/river.png';
       case 'peak':

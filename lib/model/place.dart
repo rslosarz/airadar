@@ -19,15 +19,17 @@ class PlaceSuggestions {
     this.type,
   });
 
-  factory PlaceSuggestions.fromJson(Map<String, dynamic> json) => new PlaceSuggestions(
-    places: new List<Place>.from(json["features"].map((x) => Place.fromJson(x))),
-    type: json["type"],
-  );
+  factory PlaceSuggestions.fromJson(Map<String, dynamic> json) =>
+      new PlaceSuggestions(
+        places: new List<Place>.from(
+            json["features"].map((x) => Place.fromJson(x))),
+        type: json["type"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "features": new List<dynamic>.from(places.map((x) => x.toJson())),
-    "type": type,
-  };
+        "features": new List<dynamic>.from(places.map((x) => x.toJson())),
+        "type": type,
+      };
 }
 
 class Place {
@@ -42,16 +44,16 @@ class Place {
   });
 
   factory Place.fromJson(Map<String, dynamic> json) => new Place(
-    geometry: Geometry.fromJson(json["geometry"]),
-    type: json["type"],
-    properties: Properties.fromJson(json["properties"]),
-  );
+        geometry: Geometry.fromJson(json["geometry"]),
+        type: json["type"],
+        properties: Properties.fromJson(json["properties"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "geometry": geometry.toJson(),
-    "type": type,
-    "properties": properties.toJson(),
-  };
+        "geometry": geometry.toJson(),
+        "type": type,
+        "properties": properties.toJson(),
+      };
 }
 
 class Geometry {
@@ -64,14 +66,15 @@ class Geometry {
   });
 
   factory Geometry.fromJson(Map<String, dynamic> json) => new Geometry(
-    coordinates: new List<double>.from(json["coordinates"].map((x) => x.toDouble())),
-    type: json["type"],
-  );
+        coordinates:
+            new List<double>.from(json["coordinates"].map((x) => x.toDouble())),
+        type: json["type"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "coordinates": new List<dynamic>.from(coordinates.map((x) => x)),
-    "type": type,
-  };
+        "coordinates": new List<dynamic>.from(coordinates.map((x) => x)),
+        "type": type,
+      };
 }
 
 class Properties {
@@ -92,20 +95,20 @@ class Properties {
   });
 
   factory Properties.fromJson(Map<String, dynamic> json) => new Properties(
-    country: json["country"],
-    city: json["city"] == null ? null : json["city"],
-    placeType: json["osm_value"],
-    postcode: json["postcode"],
-    name: json["name"],
-    state: json["state"],
-  );
+        country: json["country"],
+        city: json["city"] == null ? null : json["city"],
+        placeType: json["osm_value"],
+        postcode: json["postcode"],
+        name: json["name"],
+        state: json["state"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "country": country,
-    "city": city == null ? null : city,
-    "osm_value": placeType,
-    "postcode": postcode,
-    "name": name,
-    "state": state,
-  };
+        "country": country,
+        "city": city == null ? null : city,
+        "osm_value": placeType,
+        "postcode": postcode,
+        "name": name,
+        "state": state,
+      };
 }
