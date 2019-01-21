@@ -24,9 +24,12 @@ dependencies:
   cupertino_icons: ^0.1.2
 
 dev_dependencies:
+  mockito: 3.0.0
   flutter_test:
     sdk: flutter
 
+  #for testing image network
+  image_test_utils: ^1.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
