@@ -89,6 +89,7 @@ class PlacePickerScreen extends StatelessWidget {
 
   Widget _placeSuggestionsList(List<Place> items) {
     return ListView.builder(
+      key: Key('place-list'),
       itemCount: items.length,
       itemBuilder: (context, index) => _buildPlaceItem(context, items[index]),
     );
