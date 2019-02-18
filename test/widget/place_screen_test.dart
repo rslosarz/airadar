@@ -1,6 +1,6 @@
 import 'package:airadar/blocks/place_block.dart';
 import 'package:airadar/repo/mock/mock_place_api_response.dart';
-import 'package:airadar/repo/mock_place_service.dart';
+import 'package:airadar/repo/mock/mock_place_service.dart';
 import 'package:airadar/repo/place_repository.dart';
 import 'package:airadar/screens/place_picker_screen.dart';
 import 'package:flutter/material.dart';

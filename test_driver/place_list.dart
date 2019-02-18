@@ -1,8 +1,8 @@
 import 'package:airadar/app.dart';
 import 'package:airadar/blocks/place_block.dart';
 import 'package:airadar/blocks/weather_block.dart';
-import 'package:airadar/repo/mock_place_service.dart';
-import 'package:airadar/repo/mock_weather_service.dart';
+import 'package:airadar/repo/mock/mock_place_service.dart';
+import 'package:airadar/repo/mock/mock_weather_service.dart';
 import 'package:airadar/repo/place_repository.dart';
 import 'package:airadar/repo/weather_repository.dart';
 import 'package:flutter/material.dart';

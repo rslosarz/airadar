@@ -1,7 +1,7 @@
 import 'package:airadar/blocks/weather_block.dart';
 import 'package:airadar/repo/mock/mock_place_api_response.dart';
 import 'package:airadar/repo/mock/mock_weather_api_response.dart';
-import 'package:airadar/repo/mock_weather_service.dart';
+import 'package:airadar/repo/mock/mock_weather_service.dart';
 import 'package:airadar/repo/weather_repository.dart';
 import 'package:airadar/screens/weather_screen.dart';
 import 'package:flutter/material.dart';
