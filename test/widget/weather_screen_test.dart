@@ -1,51 +1,22 @@
 import 'package:airadar/blocks/weather_block.dart';
-import 'package:airadar/model/place.dart';
-import 'package:airadar/model/weather_forecast.dart';
+import 'package:airadar/repo/mock/mock_place_api_response.dart';
+import 'package:airadar/repo/mock/mock_weather_api_response.dart';
+import 'package:airadar/repo/mock_weather_service.dart';
 import 'package:airadar/repo/weather_repository.dart';
 import 'package:airadar/screens/weather_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:image_test_utils/image_test_utils.dart';
-import 'package:mockito/mockito.dart';
-
-class MockWeatherService extends Mock implements WeatherRepository {}
 
 void main() {
   group('WeatherScreen', () {
     WeatherRepository repo;
-    final place = Place(
-      properties: Properties(name: "Poznan"),
-      geometry: Geometry(
-        coordinates: [1.0, 2.0],
-      ),
-    );
-
-    final forecast = WeatherForecast(
-      main: Main(
-        temp: 23.0,
-        pressure: 1000.0,
-      ),
-      wind: Wind(
-        speed: 5.0,
-        deg: 180.0,
-      ),
-      clouds: Clouds(
-        all: 60,
-      ),
-      weather: [
-        Weather(
-          icon: "03d",
-        ),
-      ],
-    );
+    final place = MockPlaceApiResponse.placeSuggestions.places[0];
+    final forecast = MockWeatherApiResponse.weather1;
 
     setUpAll(() {
       repo = MockWeatherService();
-      when(repo.getWeatherForecast(
-        place.geometry.coordinates[0],
-        place.geometry.coordinates[1],
-      )).thenAnswer((_) async => forecast);
       final injector = Injector.getInjector();
       injector.map<WeatherRepository>((i) => repo, isSingleton: true);
       injector.map<WeatherBlock>(

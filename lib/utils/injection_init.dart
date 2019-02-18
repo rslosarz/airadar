@@ -5,15 +5,17 @@ import 'package:airadar/repo/place_service.dart';
 import 'package:airadar/repo/weather_repository.dart';
 import 'package:airadar/repo/weather_service.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
+import 'package:http/http.dart' as http;
 
 class InjectionInit {
   static void init() {
     final injector = Injector.getInjector();
-    injector.map<WeatherRepository>((i) => new WeatherService(),
+    injector.map<WeatherRepository>((i) => new WeatherService(injector.get<http.Client>()),
         isSingleton: true);
     injector.map<WeatherBlock>(
         (i) => new WeatherBlock(injector.get<WeatherRepository>()));
-    injector.map<PlaceRepository>((i) => new PlaceService(), isSingleton: true);
+    injector.map<PlaceRepository>((i) => new PlaceService(injector.get<http.Client>()),
+        isSingleton: true);
     injector.map<PlaceBlock>(
         (i) => new PlaceBlock(injector.get<PlaceRepository>()));
   }

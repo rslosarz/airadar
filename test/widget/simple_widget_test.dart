@@ -1,4 +1,5 @@
 import 'package:airadar/model/place.dart';
+import 'package:airadar/repo/mock/mock_place_api_response.dart';
 import 'package:airadar/widgets/fetch_error_widget.dart';
 import 'package:airadar/widgets/loading_widget.dart';
 import 'package:airadar/widgets/place_item.dart';
@@ -25,21 +26,13 @@ void main() {
   });
 
   group('PlaceItem', () {
-    Place place;
-
-    setUpAll(() => place = Place(
-          properties: Properties(
-            country: "Poland",
-            placeType: "city",
-            name: "Poznan",
-          ),
-        ));
+    Place place = MockPlaceApiResponse.placeSuggestions.places[0];
 
     testWidgets('displays place name and country', (WidgetTester tester) async {
       await prepareWidget(tester, PlaceItem(place: place));
 
-      expect(find.text('Poznan'), findsOneWidget);
-      expect(find.text('Poland'), findsOneWidget);
+      expect(find.text(place.properties.name), findsOneWidget);
+      expect(find.text(place.properties.country), findsOneWidget);
       expect(find.byType(Image), findsOneWidget);
     });
   });

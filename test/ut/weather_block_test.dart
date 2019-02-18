@@ -4,19 +4,21 @@ import 'package:airadar/blocks/weather_block.dart';
 import 'package:airadar/model/place.dart';
 import 'package:airadar/model/weather_forecast.dart';
 import 'package:airadar/model/weather_forecast_state.dart';
+import 'package:airadar/repo/mock/mock_place_api_response.dart';
+import 'package:airadar/repo/mock/mock_weather_api_response.dart';
 import 'package:airadar/repo/weather_repository.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test_api/test_api.dart';
 
-class MockWeatherService extends Mock implements WeatherRepository {}
+class LocalMockWeatherService extends Mock implements WeatherRepository {}
 
 void main() {
   group('Weather Block', () {
     WeatherBlock block;
-    MockWeatherService api;
+    LocalMockWeatherService api;
 
     setUp(() {
-      api = MockWeatherService();
+      api = LocalMockWeatherService();
       block = WeatherBlock(api);
     });
 
@@ -26,13 +28,9 @@ void main() {
     });
 
     test('emits loading state then valid suggestion state', () {
-      final place = Place(geometry: Geometry(coordinates: [1.0, 2.0]));
-      final forecast =
-          WeatherForecast(main: Main(temp: 128.0, pressure: 123.0));
-      when(api.getWeatherForecast(
-        place.geometry.coordinates[0],
-        place.geometry.coordinates[1],
-      )).thenAnswer((_) async => forecast);
+      final place = MockPlaceApiResponse.placeSuggestions.places[0];
+      final forecast = MockWeatherApiResponse.weather1;
+      setupWeatherMock(api, place, forecast);
 
       scheduleMicrotask(() {
         block.place.add(place);
@@ -49,23 +47,13 @@ void main() {
     });
 
     test('switches query', () {
-      final place1 = Place(geometry: Geometry(coordinates: [1.0, 2.0]));
-      final forecast1 =
-          WeatherForecast(main: Main(temp: 128.0, pressure: 123.0));
+      final place1 = MockPlaceApiResponse.placeSuggestions.places[0];
+      final forecast1 = MockWeatherApiResponse.weather1;
+      setupWeatherMock(api, place1, forecast1);
 
-      final place2 = Place(geometry: Geometry(coordinates: [3.0, 4.0]));
-      final forecast2 =
-          WeatherForecast(main: Main(temp: 231.0, pressure: 231.0));
-
-      when(api.getWeatherForecast(
-        place1.geometry.coordinates[0],
-        place1.geometry.coordinates[1],
-      )).thenAnswer((_) async => forecast1);
-
-      when(api.getWeatherForecast(
-        place2.geometry.coordinates[0],
-        place2.geometry.coordinates[1],
-      )).thenAnswer((_) async => forecast2);
+      final place2 = MockPlaceApiResponse.placeSuggestions.places[1];
+      final forecast2 = MockWeatherApiResponse.weather2;
+      setupWeatherMock(api, place2, forecast2);
 
       scheduleMicrotask(() {
         block.place.add(place1);
@@ -83,7 +71,7 @@ void main() {
     });
 
     test('emits error state when api throws an Exception', () {
-      final place = Place(geometry: Geometry(coordinates: [1.0, 2.0]));
+      final place = MockPlaceApiResponse.placeSuggestions.places[0];
       when(api.getWeatherForecast(
         place.geometry.coordinates[0],
         place.geometry.coordinates[1],
@@ -115,6 +103,13 @@ void main() {
       );
     });
   });
+}
+
+void setupWeatherMock(LocalMockWeatherService mockApi, Place place, WeatherForecast forecast)  {
+  when(mockApi.getWeatherForecast(
+    place.geometry.coordinates[0],
+    place.geometry.coordinates[1],
+  )).thenAnswer((_) async => forecast);
 }
 
 bool isValidForecastState(

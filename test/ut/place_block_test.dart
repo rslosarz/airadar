@@ -3,19 +3,20 @@ import 'dart:async';
 import 'package:airadar/blocks/place_block.dart';
 import 'package:airadar/model/place.dart';
 import 'package:airadar/model/place_suggestions_state.dart';
+import 'package:airadar/repo/mock/mock_place_api_response.dart';
 import 'package:airadar/repo/place_repository.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test_api/test_api.dart';
 
-class MockPlaceService extends Mock implements PlaceRepository {}
+class LocalMockPlaceService extends Mock implements PlaceRepository {}
 
 void main() {
   group('Place Block', () {
     PlaceBlock block;
-    MockPlaceService api;
+    LocalMockPlaceService api;
 
     setUp(() {
-      api = MockPlaceService();
+      api = LocalMockPlaceService();
       block = PlaceBlock(api);
     });
 
@@ -25,12 +26,11 @@ void main() {
     });
 
     test('emits loading state then valid suggestion state', () {
-      final suggestions =
-          PlaceSuggestions(places: [Place(type: "A"), Place(type: "B")]);
-      when(api.getPlaceSuggestions("ASD")).thenAnswer((_) async => suggestions);
+      PlaceSuggestions suggestions = MockPlaceApiResponse.placeSuggestions;
+      setupPlaceSuggestionsMockResponse(api, "QUERY", suggestions);
 
       scheduleMicrotask(() {
-        block.query.add("ASD");
+        block.query.add("QUERY");
       });
 
       expect(
@@ -44,19 +44,15 @@ void main() {
     });
 
     test('switches query', () {
-      final suggestions1 =
-          PlaceSuggestions(places: [Place(type: "A"), Place(type: "B")]);
-
+      final suggestions1 = MockPlaceApiResponse.placeSuggestions;
       final suggestions2 =
-          PlaceSuggestions(places: [Place(type: "A"), Place(type: "B")]);
-      when(api.getPlaceSuggestions("ASD"))
-          .thenAnswer((_) async => suggestions1);
-      when(api.getPlaceSuggestions("ZXC"))
-          .thenAnswer((_) async => suggestions2);
+          PlaceSuggestions(places: [Place(type: "C"), Place(type: "D")]);
+      setupPlaceSuggestionsMockResponse(api, "QUERY", suggestions1);
+      setupPlaceSuggestionsMockResponse(api, "QUERY2", suggestions2);
 
       scheduleMicrotask(() {
-        block.query.add("ASD");
-        block.query.add("ZXC");
+        block.query.add("QUERY");
+        block.query.add("QUERY2");
       });
 
       expect(
@@ -71,7 +67,7 @@ void main() {
 
     test('emits valid state with empty query', () {
       final suggestions = PlaceSuggestions(places: []);
-      when(api.getPlaceSuggestions("")).thenAnswer((_) async => suggestions);
+      setupPlaceSuggestionsMockResponse(api, "", suggestions);
 
       scheduleMicrotask(() {
         block.query.add("");
@@ -89,10 +85,10 @@ void main() {
 
     test('emits valid state with empty list fetched from api', () {
       final suggestions = PlaceSuggestions(places: []);
-      when(api.getPlaceSuggestions("ASD")).thenAnswer((_) async => suggestions);
+      setupPlaceSuggestionsMockResponse(api, "QUERY", suggestions);
 
       scheduleMicrotask(() {
-        block.query.add("ASD");
+        block.query.add("QUERY");
       });
 
       expect(
@@ -106,10 +102,10 @@ void main() {
     });
 
     test('emits error state when api throws an Exception', () {
-      when(api.getPlaceSuggestions("ASD")).thenThrow(Exception());
+      when(api.getPlaceSuggestions("QUERY")).thenThrow(Exception());
 
       scheduleMicrotask(() {
-        block.query.add("ASD");
+        block.query.add("QUERY");
       });
 
       expect(
@@ -134,6 +130,11 @@ void main() {
       );
     });
   });
+}
+
+void setupPlaceSuggestionsMockResponse(
+    LocalMockPlaceService mockApi, String query, PlaceSuggestions suggestions) {
+  when(mockApi.getPlaceSuggestions(query)).thenAnswer((_) async => suggestions);
 }
 
 bool isValidSuggestionState(
