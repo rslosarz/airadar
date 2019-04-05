@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 class InjectionInit {
   static void init() {
     final injector = Injector.getInjector();
+    injector.map<http.Client>((i) => new http.Client());
     injector.map<WeatherRepository>((i) => new WeatherService(injector.get<http.Client>()),
         isSingleton: true);
     injector.map<WeatherBlock>(
