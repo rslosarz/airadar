@@ -20,11 +20,6 @@ void main() {
       block = PlaceBlock(api);
     });
 
-    tearDown(() {
-      api = null;
-      block = null;
-    });
-
     test('emits loading state then valid suggestion state', () {
       PlaceSuggestions suggestions = MockPlaceApiResponse.placeSuggestions;
       setupPlaceSuggestionsMockResponse(api, "QUERY", suggestions);

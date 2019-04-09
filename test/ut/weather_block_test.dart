@@ -22,11 +22,6 @@ void main() {
       block = WeatherBlock(api);
     });
 
-    tearDown(() {
-      api = null;
-      block = null;
-    });
-
     test('emits loading state then valid suggestion state', () {
       final place = MockPlaceApiResponse.placeSuggestions.places[0];
       final forecast = MockWeatherApiResponse.weather1;
@@ -40,8 +35,7 @@ void main() {
         block.weatherStream,
         emitsInOrder([
           emits((WeatherForecastState item) => item.loading),
-          emits((WeatherForecastState item) =>
-              isValidForecastState(item, forecast)),
+          emits((WeatherForecastState item) => isValidForecastState(item, forecast)),
         ]),
       );
     });
@@ -64,8 +58,7 @@ void main() {
         block.weatherStream,
         emitsInOrder([
           emits((WeatherForecastState item) => item.loading),
-          emits((WeatherForecastState item) =>
-              isValidForecastState(item, forecast2)),
+          emits((WeatherForecastState item) => isValidForecastState(item, forecast2)),
         ]),
       );
     });
@@ -105,14 +98,13 @@ void main() {
   });
 }
 
-void setupWeatherMock(LocalMockWeatherService mockApi, Place place, WeatherForecast forecast)  {
+void setupWeatherMock(LocalMockWeatherService mockApi, Place place, WeatherForecast forecast) {
   when(mockApi.getWeatherForecast(
     place.geometry.coordinates[0],
     place.geometry.coordinates[1],
   )).thenAnswer((_) async => forecast);
 }
 
-bool isValidForecastState(
-    WeatherForecastState state, WeatherForecast forecast) {
+bool isValidForecastState(WeatherForecastState state, WeatherForecast forecast) {
   return state.weatherForecast == forecast && !state.loading && !state.error;
 }
