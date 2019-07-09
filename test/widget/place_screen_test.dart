@@ -1,4 +1,4 @@
-import 'package:airadar/blocks/place_block.dart';
+import 'package:airadar/blocs/place_bloc.dart';
 import 'package:airadar/repo/mock/mock_place_api_response.dart';
 import 'package:airadar/repo/mock/mock_place_service.dart';
 import 'package:airadar/repo/place_repository.dart';
@@ -9,11 +9,11 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('Place Picker Screen', () {
     PlaceRepository repo;
-    PlaceBlock block;
+    PlaceBloc block;
     final places = MockPlaceApiResponse.placeSuggestions.places;
     setUpAll(() {
       repo = MockPlaceService();
-      block = PlaceBlock(repo);
+      block = PlaceBloc(repo);
     });
 
     testWidgets('fetches data on search query typed',

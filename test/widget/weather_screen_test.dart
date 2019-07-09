@@ -1,4 +1,4 @@
-import 'package:airadar/blocks/weather_block.dart';
+import 'package:airadar/blocs/weather_bloc.dart';
 import 'package:airadar/repo/mock/mock_place_api_response.dart';
 import 'package:airadar/repo/mock/mock_weather_api_response.dart';
 import 'package:airadar/repo/mock/mock_weather_service.dart';
@@ -19,8 +19,8 @@ void main() {
       repo = MockWeatherService();
       final injector = Injector.getInjector();
       injector.map<WeatherRepository>((i) => repo, isSingleton: true);
-      injector.map<WeatherBlock>(
-          (i) => new WeatherBlock(injector.get<WeatherRepository>()));
+      injector.map<WeatherBloc>(
+          (i) => new WeatherBloc(injector.get<WeatherRepository>()));
     });
 
     testWidgets('displays weather forecast and place details',

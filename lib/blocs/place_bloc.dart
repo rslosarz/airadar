@@ -4,7 +4,7 @@ import 'package:airadar/model/place_suggestions_state.dart';
 import 'package:airadar/repo/place_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
-class PlaceBlock {
+class PlaceBloc {
   PlaceRepository placeRepo;
 
   Sink<String> get query => _queryStream.sink;
@@ -12,7 +12,7 @@ class PlaceBlock {
 
   Stream<PlaceSuggestionsState> placeSuggestions;
 
-  PlaceBlock(this.placeRepo) {
+  PlaceBloc(this.placeRepo) {
     placeSuggestions = _queryStream.stream
         .distinct()
         .debounce(const Duration(milliseconds: 500))

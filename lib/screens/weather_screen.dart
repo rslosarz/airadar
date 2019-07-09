@@ -1,4 +1,4 @@
-import 'package:airadar/blocks/weather_block.dart';
+import 'package:airadar/blocs/weather_bloc.dart';
 import 'package:airadar/model/place.dart';
 import 'package:airadar/model/weather_forecast.dart';
 import 'package:airadar/model/weather_forecast_state.dart';
@@ -16,25 +16,25 @@ class WeatherScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return WeatherScreenState(
-        place, Injector.getInjector().get<WeatherBlock>());
+        place, Injector.getInjector().get<WeatherBloc>());
   }
 }
 
 class WeatherScreenState extends State<WeatherScreen> {
   final Place place;
-  WeatherBlock weatherBlock;
+  WeatherBloc weatherBloc;
 
-  WeatherScreenState(this.place, this.weatherBlock);
+  WeatherScreenState(this.place, this.weatherBloc);
 
   @override
   void initState() {
     super.initState();
-    weatherBlock.place.add(place);
+    weatherBloc.place.add(place);
   }
 
   @override
   void dispose() {
-    weatherBlock.dispose();
+    weatherBloc.dispose();
     super.dispose();
   }
 
@@ -81,7 +81,7 @@ class WeatherScreenState extends State<WeatherScreen> {
   Widget _buildWeatherPart() {
     return StreamBuilder<WeatherForecastState>(
       initialData: WeatherForecastState(),
-      stream: weatherBlock.weatherStream,
+      stream: weatherBloc.weatherStream,
       builder: (context, snapshot) {
         final state = snapshot.data;
         return Expanded(
@@ -135,7 +135,7 @@ class WeatherScreenState extends State<WeatherScreen> {
             child: Container(
               color: Colors.white,
               child: Image.network(
-                weatherBlock.getWeatherImageUrl(weatherForecast),
+                weatherBloc.getWeatherImageUrl(weatherForecast),
                 width: 64.0,
               ),
             ),

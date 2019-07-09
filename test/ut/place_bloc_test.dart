@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:airadar/blocks/place_block.dart';
+import 'package:airadar/blocs/place_bloc.dart';
 import 'package:airadar/model/place.dart';
 import 'package:airadar/model/place_suggestions_state.dart';
 import 'package:airadar/repo/mock/mock_place_api_response.dart';
@@ -11,13 +11,13 @@ import 'package:test_api/test_api.dart';
 class LocalMockPlaceService extends Mock implements PlaceRepository {}
 
 void main() {
-  group('Place Block', () {
-    PlaceBlock block;
+  group('Place Bloc', () {
+    PlaceBloc block;
     LocalMockPlaceService api;
 
     setUp(() {
       api = LocalMockPlaceService();
-      block = PlaceBlock(api);
+      block = PlaceBloc(api);
     });
 
     test('emits loading state then valid suggestion state', () {

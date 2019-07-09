@@ -1,10 +1,12 @@
+import 'dart:async';
+
 import 'package:airadar/model/place.dart';
 import 'package:airadar/model/weather_forecast.dart';
 import 'package:airadar/model/weather_forecast_state.dart';
 import 'package:airadar/repo/weather_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
-class WeatherBlock {
+class WeatherBloc {
   final WeatherRepository weatherRepository;
 
   Sink<Place> get place => _placeStream.sink;
@@ -12,7 +14,7 @@ class WeatherBlock {
 
   Stream<WeatherForecastState> weatherStream;
 
-  WeatherBlock(this.weatherRepository) {
+  WeatherBloc(this.weatherRepository) {
     weatherStream = _placeStream.switchMap(_getWeatherForecast);
   }
 
