@@ -1,6 +1,6 @@
 import 'package:airadar/app.dart';
-import 'package:airadar/blocks/place_block.dart';
-import 'package:airadar/blocks/weather_block.dart';
+import 'package:airadar/blocs/place_bloc.dart';
+import 'package:airadar/blocs/weather_bloc.dart';
 import 'package:airadar/repo/mock/mock_place_service.dart';
 import 'package:airadar/repo/mock/mock_weather_service.dart';
 import 'package:airadar/repo/place_repository.dart';
@@ -20,10 +20,10 @@ void initMockDi() {
   final injector = Injector.getInjector();
   injector.map<WeatherRepository>((i) => new MockWeatherService(),
       isSingleton: true);
-  injector.map<WeatherBlock>(
-      (i) => new WeatherBlock(injector.get<WeatherRepository>()));
+  injector.map<WeatherBloc>(
+      (i) => new WeatherBloc(injector.get<WeatherRepository>()));
   injector.map<PlaceRepository>((i) => new MockPlaceService(),
       isSingleton: true);
   injector
-      .map<PlaceBlock>((i) => new PlaceBlock(injector.get<PlaceRepository>()));
+      .map<PlaceBloc>((i) => new PlaceBloc(injector.get<PlaceRepository>()));
 }

@@ -1,4 +1,4 @@
-import 'package:airadar/blocks/place_block.dart';
+import 'package:airadar/blocs/place_bloc.dart';
 import 'package:airadar/screens/place_picker_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
@@ -14,7 +14,7 @@ class AiradarApp extends StatelessWidget {
         accentColor: Colors.amber,
         scaffoldBackgroundColor: Colors.blueGrey,
       ),
-      home: PlacePickerScreen(Injector.getInjector().get<PlaceBlock>()),
+      home: PlacePickerScreen(Injector.getInjector().get<PlaceBloc>()),
     );
   }
 }

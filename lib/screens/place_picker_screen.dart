@@ -1,4 +1,4 @@
-import 'package:airadar/blocks/place_block.dart';
+import 'package:airadar/blocs/place_bloc.dart';
 import 'package:airadar/model/place.dart';
 import 'package:airadar/model/place_suggestions_state.dart';
 import 'package:airadar/widgets/fetch_error_widget.dart';
@@ -7,9 +7,9 @@ import 'package:airadar/widgets/place_item.dart';
 import 'package:flutter/material.dart';
 
 class PlacePickerScreen extends StatelessWidget {
-  final PlaceBlock placeBlock;
+  final PlaceBloc placeBloc;
 
-  PlacePickerScreen(this.placeBlock);
+  PlacePickerScreen(this.placeBloc);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class PlacePickerScreen extends StatelessWidget {
           border: UnderlineInputBorder(),
           hintText: 'Place for place...',
         ),
-        onChanged: placeBlock.query.add,
+        onChanged: placeBloc.query.add,
       ),
     );
   }
@@ -43,7 +43,7 @@ class PlacePickerScreen extends StatelessWidget {
   Widget _buildPlaceSuggestionList() {
     return StreamBuilder<PlaceSuggestionsState>(
       initialData: PlaceSuggestionsState(),
-      stream: placeBlock.placeSuggestions,
+      stream: placeBloc.placeSuggestions,
       builder: (context, snapshot) {
         final state = snapshot.data;
         return Expanded(

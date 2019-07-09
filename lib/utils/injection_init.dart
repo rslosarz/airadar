@@ -1,5 +1,5 @@
-import 'package:airadar/blocks/place_block.dart';
-import 'package:airadar/blocks/weather_block.dart';
+import 'package:airadar/blocs/place_bloc.dart';
+import 'package:airadar/blocs/weather_bloc.dart';
 import 'package:airadar/repo/place_repository.dart';
 import 'package:airadar/repo/place_service.dart';
 import 'package:airadar/repo/weather_repository.dart';
@@ -13,12 +13,12 @@ class InjectionInit {
     injector.map<http.Client>((i) => new http.Client());
     injector.map<WeatherRepository>((i) => new WeatherService(injector.get<http.Client>()),
         isSingleton: true);
-    injector.map<WeatherBlock>(
-        (i) => new WeatherBlock(injector.get<WeatherRepository>()));
+    injector.map<WeatherBloc>(
+        (i) => new WeatherBloc(injector.get<WeatherRepository>()));
     injector.map<PlaceRepository>((i) => new PlaceService(injector.get<http.Client>()),
         isSingleton: true);
-    injector.map<PlaceBlock>(
-        (i) => new PlaceBlock(injector.get<PlaceRepository>()));
+    injector.map<PlaceBloc>(
+        (i) => new PlaceBloc(injector.get<PlaceRepository>()));
   }
 
   static void dispose() {

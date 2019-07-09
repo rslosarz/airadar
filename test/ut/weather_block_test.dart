@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:airadar/blocks/weather_block.dart';
+import 'package:airadar/blocs/weather_bloc.dart';
 import 'package:airadar/model/place.dart';
 import 'package:airadar/model/weather_forecast.dart';
 import 'package:airadar/model/weather_forecast_state.dart';
@@ -13,13 +13,13 @@ import 'package:test_api/test_api.dart';
 class LocalMockWeatherService extends Mock implements WeatherRepository {}
 
 void main() {
-  group('Weather Block', () {
-    WeatherBlock block;
+  group('Weather Bloc', () {
+    WeatherBloc block;
     LocalMockWeatherService api;
 
     setUp(() {
       api = LocalMockWeatherService();
-      block = WeatherBlock(api);
+      block = WeatherBloc(api);
     });
 
     test('emits loading state then valid suggestion state', () {
