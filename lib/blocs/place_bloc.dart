@@ -15,7 +15,7 @@ class PlaceBloc {
   PlaceBloc(this.placeRepo) {
     placeSuggestions = _queryStream.stream
         .distinct()
-        .debounce(const Duration(milliseconds: 500))
+        .debounceTime(const Duration(milliseconds: 500))
         .switchMap(_search);
   }
 

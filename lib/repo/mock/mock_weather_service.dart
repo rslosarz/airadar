@@ -29,8 +29,6 @@ class MockWeatherService implements WeatherRepository {
       all: 60,
     ),
     sys: Sys(
-      message: 0.0028,
-      country: "RU",
       sunrise: 1548373590,
       sunset: 1548404079,
     ),

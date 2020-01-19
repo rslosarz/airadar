@@ -29,8 +29,6 @@ class MockWeatherApiResponse {
       all: 60,
     ),
     sys: Sys(
-      message: 0.0028,
-      country: "RU",
       sunrise: 1548373590,
       sunset: 1548404079,
     ),
@@ -66,8 +64,6 @@ class MockWeatherApiResponse {
       all: 88,
     ),
     sys: Sys(
-      message: 0.0033,
-      country: "KZ",
       sunrise: 1550460313,
       sunset: 1550498832,
     ),
@@ -108,8 +104,6 @@ class MockWeatherApiResponse {
     },
     "dt": 1548412330,
     "sys": {
-        "message": 0.0028,
-        "country": "RU",
         "sunrise": 1548373590,
         "sunset": 1548404079
     },

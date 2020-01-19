@@ -6,7 +6,7 @@ import 'package:airadar/model/place_suggestions_state.dart';
 import 'package:airadar/repo/mock/mock_place_api_response.dart';
 import 'package:airadar/repo/place_repository.dart';
 import 'package:mockito/mockito.dart';
-import 'package:test_api/test_api.dart';
+import 'package:test/test.dart';
 
 class LocalMockPlaceService extends Mock implements PlaceRepository {}
 
