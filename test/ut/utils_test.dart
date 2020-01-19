@@ -1,6 +1,6 @@
 import 'package:airadar/model/place.dart';
 import 'package:airadar/utils/resource_manager.dart';
-import 'package:test_api/test_api.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('Resource Manager', () {

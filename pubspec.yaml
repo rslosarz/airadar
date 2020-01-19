@@ -1,5 +1,5 @@
 name: airadar
-description: Application showing air quality
+description: Application showing weather info
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -15,8 +15,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: "^0.11.3+16"
-  rxdart: ^0.18.0
+  http: ^0.12.0+4
+  rxdart: ^0.23.1
   flutter_simple_dependency_injection: any
 
   # The following adds the Cupertino Icons font to your application.
