@@ -9,19 +9,18 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('Place Picker Screen', () {
     PlaceRepository repo;
-    PlaceBloc block;
+    PlaceBloc bloc;
     final places = MockPlaceApiResponse.placeSuggestions.places;
     setUpAll(() {
       repo = MockPlaceService();
-      block = PlaceBloc(repo);
+      bloc = PlaceBloc(repo);
     });
 
     testWidgets('fetches data on search query typed',
         (WidgetTester tester) async {
-      await prepareWidget(tester, PlacePickerScreen(block));
+      await prepareWidget(tester, PlacePickerScreen(bloc));
 
       expect(find.text('List is empty'), findsOneWidget);
-      await tester.pump();
 
       await tester.enterText(find.byType(TextField), "ASD");
 
