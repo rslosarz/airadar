@@ -12,12 +12,12 @@ class LocalMockPlaceService extends Mock implements PlaceRepository {}
 
 void main() {
   group('Place Bloc', () {
-    PlaceBloc block;
+    PlaceBloc bloc;
     LocalMockPlaceService api;
 
     setUp(() {
       api = LocalMockPlaceService();
-      block = PlaceBloc(api);
+      bloc = PlaceBloc(api);
     });
 
     test('emits loading state then valid suggestion state', () {
@@ -25,11 +25,11 @@ void main() {
       setupPlaceSuggestionsMockResponse(api, "QUERY", suggestions);
 
       scheduleMicrotask(() {
-        block.query.add("QUERY");
+        bloc.query.add("QUERY");
       });
 
       expect(
-        block.placeSuggestions,
+        bloc.placeSuggestions,
         emitsInOrder([
           emits((PlaceSuggestionsState item) => item.loading),
           emits((PlaceSuggestionsState item) =>
@@ -46,12 +46,12 @@ void main() {
       setupPlaceSuggestionsMockResponse(api, "QUERY2", suggestions2);
 
       scheduleMicrotask(() {
-        block.query.add("QUERY");
-        block.query.add("QUERY2");
+        bloc.query.add("QUERY");
+        bloc.query.add("QUERY2");
       });
 
       expect(
-        block.placeSuggestions,
+        bloc.placeSuggestions,
         emitsInOrder([
           emits((PlaceSuggestionsState item) => item.loading),
           emits((PlaceSuggestionsState item) =>
@@ -65,11 +65,11 @@ void main() {
       setupPlaceSuggestionsMockResponse(api, "", suggestions);
 
       scheduleMicrotask(() {
-        block.query.add("");
+        bloc.query.add("");
       });
 
       expect(
-        block.placeSuggestions,
+        bloc.placeSuggestions,
         emitsInOrder([
           emits((PlaceSuggestionsState item) => item.loading),
           emits((PlaceSuggestionsState item) =>
@@ -83,11 +83,11 @@ void main() {
       setupPlaceSuggestionsMockResponse(api, "QUERY", suggestions);
 
       scheduleMicrotask(() {
-        block.query.add("QUERY");
+        bloc.query.add("QUERY");
       });
 
       expect(
-        block.placeSuggestions,
+        bloc.placeSuggestions,
         emitsInOrder([
           emits((PlaceSuggestionsState item) => item.loading),
           emits((PlaceSuggestionsState item) =>
@@ -100,11 +100,11 @@ void main() {
       when(api.getPlaceSuggestions("QUERY")).thenThrow(Exception());
 
       scheduleMicrotask(() {
-        block.query.add("QUERY");
+        bloc.query.add("QUERY");
       });
 
       expect(
-        block.placeSuggestions,
+        bloc.placeSuggestions,
         emitsInOrder([
           emits((PlaceSuggestionsState item) => item.loading),
           emits((PlaceSuggestionsState item) => item.error),
@@ -112,13 +112,13 @@ void main() {
       );
     });
 
-    test('stream emits done when block is disposed', () {
+    test('stream emits done when bloc is disposed', () {
       scheduleMicrotask(() {
-        block.dispose();
+        bloc.dispose();
       });
 
       expect(
-        block.placeSuggestions,
+        bloc.placeSuggestions,
         emitsInOrder([
           emitsDone,
         ]),

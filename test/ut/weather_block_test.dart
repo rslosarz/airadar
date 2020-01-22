@@ -14,12 +14,12 @@ class LocalMockWeatherService extends Mock implements WeatherRepository {}
 
 void main() {
   group('Weather Bloc', () {
-    WeatherBloc block;
+    WeatherBloc bloc;
     LocalMockWeatherService api;
 
     setUp(() {
       api = LocalMockWeatherService();
-      block = WeatherBloc(api);
+      bloc = WeatherBloc(api);
     });
 
     test('emits loading state then valid suggestion state', () {
@@ -28,11 +28,11 @@ void main() {
       setupWeatherMock(api, place, forecast);
 
       scheduleMicrotask(() {
-        block.place.add(place);
+        bloc.place.add(place);
       });
 
       expect(
-        block.weatherStream,
+        bloc.weatherStream,
         emitsInOrder([
           emits((WeatherForecastState item) => item.loading),
           emits((WeatherForecastState item) => isValidForecastState(item, forecast)),
@@ -50,12 +50,12 @@ void main() {
       setupWeatherMock(api, place2, forecast2);
 
       scheduleMicrotask(() {
-        block.place.add(place1);
-        block.place.add(place2);
+        bloc.place.add(place1);
+        bloc.place.add(place2);
       });
 
       expect(
-        block.weatherStream,
+        bloc.weatherStream,
         emitsInOrder([
           emits((WeatherForecastState item) => item.loading),
           emits((WeatherForecastState item) => isValidForecastState(item, forecast2)),
@@ -71,11 +71,11 @@ void main() {
       )).thenThrow(Exception());
 
       scheduleMicrotask(() {
-        block.place.add(place);
+        bloc.place.add(place);
       });
 
       expect(
-        block.weatherStream,
+        bloc.weatherStream,
         emitsInOrder([
           emits((WeatherForecastState item) => item.loading),
           emits((WeatherForecastState item) => item.error),
@@ -83,13 +83,13 @@ void main() {
       );
     });
 
-    test('stream emits done when block is disposed', () {
+    test('stream emits done when bloc is disposed', () {
       scheduleMicrotask(() {
-        block.dispose();
+        bloc.dispose();
       });
 
       expect(
-        block.weatherStream,
+        bloc.weatherStream,
         emitsInOrder([
           emitsDone,
         ]),
