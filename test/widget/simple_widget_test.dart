@@ -38,7 +38,7 @@ void main() {
   });
 }
 
-void prepareWidget(WidgetTester tester, Widget widget) async {
+Future<void> prepareWidget(WidgetTester tester, Widget widget) async {
   await tester.pumpWidget(
     MaterialApp(
       home: Scaffold(

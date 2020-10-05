@@ -10,7 +10,7 @@ description: Application showing weather info
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.6.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -49,6 +49,11 @@ flutter:
   uses-material-design: true
   assets:
    - assets/icons/
+
+  fonts:
+    - family: OpenSans
+      fonts:
+        - asset: assets/font/OpenSans.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:
