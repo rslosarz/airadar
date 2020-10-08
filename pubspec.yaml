@@ -10,12 +10,13 @@ description: Application showing air quality
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.6.0 <3.0.0"
+  sdk: ">=2.8.2 <3.0.0"
+  flutter: ">=1.17.1 <2.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  http: "^0.11.3+16"
+  http: ^0.12.0
   rxdart: ^0.18.0
   flutter_simple_dependency_injection: any
 
