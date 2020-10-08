@@ -8,7 +8,7 @@ import 'package:airadar/repo/mock/mock_place_api_response.dart';
 import 'package:airadar/repo/mock/mock_weather_api_response.dart';
 import 'package:airadar/repo/weather_repository.dart';
 import 'package:mockito/mockito.dart';
-import 'package:test_api/test_api.dart';
+import 'package:test/test.dart';
 
 class LocalMockWeatherService extends Mock implements WeatherRepository {}
 
